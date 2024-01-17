@@ -1,11 +1,17 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 
+// FIREBASE
 import { db } from "@/services/firebase.config"
 import { collection, getDocs, addDoc } from "firebase/firestore";
 
+// REDUX EXPORTS
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppSelector } from "@/redux/store";
+
 export default function Home() {
+	const courses = useAppSelector((state) => state.courseSlice.value.courses);
 
 	useEffect(() => {
 		const fetchCourses = async () => {
