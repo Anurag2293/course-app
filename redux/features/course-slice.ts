@@ -23,10 +23,17 @@ export const course = createSlice({
     reducers: {
         resetCourses: () => {
             return initialState;
+        },
+        addCourses: (state, action: PayloadAction<CourseType[]>) => {
+            return {
+                value: {
+                    courses: action.payload
+                }
+            }  
         }
     }
 })
 
 // exporting actions and reducers from course slice
-export const { resetCourses } = course.actions;
+export const { resetCourses, addCourses } = course.actions;
 export default course.reducer;
