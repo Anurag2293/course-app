@@ -10,7 +10,7 @@ export type CourseType = {
     duration: string,
     schedule: string,
     location: "Online" | "Offline" | "Hybrid",
-    preqrequisites: Array<string>,
+    prerequisites: Array<string>,
     syllabus: Array<SyllabusType>,
     students: Array<StudentType>
 }

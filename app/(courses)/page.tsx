@@ -4,7 +4,7 @@ import { useEffect } from "react"
 
 // FIREBASE
 import { db } from "@/services/firebase.config"
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 
 // REDUX IMPORTS
 import { useAppDispatch } from "@/hooks/useAppDispatch";
@@ -26,8 +26,7 @@ export default function Home() {
 				const coursesSnapshot = await getDocs(collection(db, "course"))
 				const coursesToAdd: CourseType[] = [];
 				coursesSnapshot.forEach((course) => {
-					let courseToAdd = { uuid: course.id }
-					courseToAdd = {...courseToAdd, ...course.data()}
+					const courseToAdd = {uuid: course.id, ...course.data()}
 					coursesToAdd.push(courseToAdd as CourseType);
 				})
 				dispatch(addCourses(coursesToAdd));
