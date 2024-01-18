@@ -1,9 +1,10 @@
 "use client"
 
+import { usePathname } from 'next/navigation';
 import Link from 'next/link'
 
 import { useAppSelector } from "@/redux/store";
-import { LoginButton, MobileMenu } from './Buttons';
+import { MobileMenu } from './Buttons';
 import NavInput from './NavInput'
 import ModeToggle from './ModeToggle';
 
@@ -13,6 +14,8 @@ const NAV_MENU = [
 ] as const;
 
 const Nav = () => {
+    const pathname = usePathname();
+    console.log({pathname})
     const isAuthenticated = useAppSelector((state) => state.authSlice.value.isAuthenticated);
 
     return (
@@ -34,16 +37,18 @@ const Nav = () => {
                         </div>
                     </Link>
                     <ul className='hidden gap-6 text-sm md:flex md:items-center'>
-                        {NAV_MENU.map(({title, link}) => (
-                            <li key={title}>
+                        {NAV_MENU.map(({title, link}) => {
+                            const isNavLinkActive = pathname === link;
+                            console.log({pathname, link, isNavLinkActive})
+                            return ( <li key={title}>
                                 <Link 
                                     href={link}
-                                    className='text-neutral-500 underline-offset-4 hover:text-primary hover:underline dark:text-neutral-400 dark:hover:text-primary'
+                                    className={`text-neutral-500 underline-offset-4 hover:text-primary hover:underline dark:text-neutral-400 dark:hover:text-primary ${isNavLinkActive && "text-primary dark:text-primary"}`}
                                 >
                                     {title}                    
                                 </Link>
-                            </li>
-                        ))}
+                            </li>)
+                        })}
                     </ul>
                 </div>
                 <div className='hidden justify-center md:flex md:w-1/3'>
