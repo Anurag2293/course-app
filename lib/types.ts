@@ -16,7 +16,7 @@ export type CourseType = {
 }
 
 export type StudentType = {
-    id: number,
+    id: string,
     name: string,
     email: string
 }

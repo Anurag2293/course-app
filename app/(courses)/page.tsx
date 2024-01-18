@@ -10,9 +10,12 @@ import { collection, getDocs } from "firebase/firestore";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/redux/store";
 import { addCourses } from "@/redux/features/course-slice";
+import { logInAsync } from "@/redux/features/auth-slice";
+
+// STATE
 import { CourseType } from "@/lib/types";
 
-// TABLE IMPORTS
+// UI
 import { DataTable } from "@/components/data-table";
 import { columns } from "./course-columns";
 

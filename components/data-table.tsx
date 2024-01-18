@@ -65,17 +65,17 @@ export function DataTable<TData, TValue>({
                     </CardHeader>
                     <CardContent className="w-full md:max-w-md flex flex-col gap-y-4 md:flex-row md:gap-x-4">
                         <Input
-                            placeholder="Enter instructor name"
-                            value={(table.getColumn("instructor")?.getFilterValue() as string) ?? ""}
-                            onChange={(event) => {
-                                table.getColumn("instructor")?.setFilterValue(event.target.value)
-                            }}
-                        />
-                        <Input
                             placeholder="Enter course name"
                             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                             onChange={(event) => {
                                 table.getColumn("name")?.setFilterValue(event.target.value)
+                            }}
+                        />
+                        <Input
+                            placeholder="Enter instructor name"
+                            value={(table.getColumn("instructor")?.getFilterValue() as string) ?? ""}
+                            onChange={(event) => {
+                                table.getColumn("instructor")?.setFilterValue(event.target.value)
                             }}
                         />
                     </CardContent>
