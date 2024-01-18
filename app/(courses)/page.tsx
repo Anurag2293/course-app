@@ -10,7 +10,6 @@ import { collection, getDocs } from "firebase/firestore";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/redux/store";
 import { addCourses } from "@/redux/features/course-slice";
-import { logInAsync } from "@/redux/features/auth-slice";
 
 // STATE
 import { CourseType } from "@/lib/types";
@@ -30,7 +29,7 @@ export default function Home() {
 				const coursesToAdd: CourseType[] = [];
 				coursesSnapshot.forEach((course) => {
 					const courseToAdd = {uuid: course.id, ...course.data()}
-					coursesToAdd.push(courseToAdd as CourseType);
+					// coursesToAdd.push(courseToAdd as CourseType);
 				})
 				dispatch(addCourses(coursesToAdd));
 			} catch (error: any) {

@@ -1,18 +1,23 @@
 
 export type CourseType = {
-    uuid: string,
     id: string,
+    code: string,
     name: string,
     instructor: string,
     description: string,
-    enrollmentStatus: "Open" | "Closed" | "InProgress",
+    enrollmentStatus: "Open" | "Closed" | "In Progress",
     thumbnail: string,
     duration: string,
     schedule: string,
-    location: "Online" | "Offline" | "Hybrid",
+    location: string,
     prerequisites: Array<string>,
     syllabus: Array<SyllabusType>,
-    students: Array<StudentType>
+    startDate: Date,
+    dueDate: Date,
+    students: [{
+        studentId: string,
+        courseStatus: "pending" | "completed"
+    }]
 }
 
 export type StudentType = {
