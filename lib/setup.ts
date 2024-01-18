@@ -1,7 +1,7 @@
 
 // FIREBASE
-import { db } from "@/services/firebase.config"
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { db } from "../services/firebase.config.ts"
+import { addDoc, collection } from "firebase/firestore";
 import type { CourseType } from "./types";
 
 let computerScienceCourses = [
@@ -234,9 +234,14 @@ const addCourse = async (course: CourseType) => {
 
 async function addCoursesToDB() {
     try {
-        const coursesCollection = collection(db, "courses");
-        const promises = computerScienceCourses.forEach((course : CourseType) => addCourse(course))
+        const promises = computerScienceCourses.map((course: any) => addCourse(course))
+        await Promise.all(promises)
+        console.log("Initialized the database successfully!")
     } catch (error) {
-
+        console.log("Their was an error initializing the firebase. Please run the setup again.")
+    } finally {
+        process.exit()
     }
 }
+
+addCoursesToDB()
