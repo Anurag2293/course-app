@@ -25,7 +25,7 @@ export const columns: ColumnDef<CourseType>[] = [
         header: "Enrollment Status"
     },
     {
-        accessorKey: "uuid",
+        accessorKey: "id",
         header: "",
         cell: ({ row }) => {
             const course = row.original;

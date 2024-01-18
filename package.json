@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "setup": "ts-node ./lib/setup.ts"
+    "setup": "ts-node ./config/setup.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",

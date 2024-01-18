@@ -1,9 +1,49 @@
 
-// FIREBASE
+const { initializeApp } = require("firebase/app")
+const { addDoc, collection, getFirestore } = require("firebase/firestore");
 
-import { db } from "../services/firebase.config.ts"
-import { addDoc, collection } from "firebase/firestore";
-import { CourseType } from "./types.ts";
+const firebaseConfig = {
+	apiKey: "AIzaSyCofd05rLHzFcmss_6DoaYj4MXnUgeSbH8",
+	authDomain: "course-app-alemeno.firebaseapp.com",
+	projectId: "course-app-alemeno",
+	storageBucket: "course-app-alemeno.appspot.com",
+	messagingSenderId: "682724620931",
+	appId: "1:682724620931:web:bdf7dbb5985a96bab739b6",
+	measurementId: "G-SL7J38MG8K" // optional
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Initialize Cloud firestore
+const db = getFirestore(app);
+
+type CourseType = {
+    id: string,
+    code: string,
+    name: string,
+    instructor: string,
+    description: string,
+    enrollmentStatus: "Open" | "Closed" | "In Progress",
+    thumbnail: string,
+    duration: string,
+    schedule: string,
+    location: string,
+    prerequisites: Array<string>,
+    syllabus: Array<SyllabusType>,
+    startDate: Date,
+    dueDate: Date,
+    students: [{
+        studentId: string,
+        courseStatus: "pending" | "completed"
+    }]
+}
+
+type SyllabusType = {
+    week: number,
+    topic: string,
+    content: string
+}
 
 let computerScienceCourses = [
     {
@@ -233,7 +273,7 @@ const addCourse = async (course: CourseType) => {
     await addDoc(coursesCollection, course);
 } 
 
-async function addCoursesToDB() {
+const addCoursesToDB = async () => {
     try {
         const promises = computerScienceCourses.map((course: any) => addCourse(course))
         await Promise.all(promises)
