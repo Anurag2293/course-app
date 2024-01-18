@@ -1,5 +1,6 @@
 
 export type CourseType = {
+    uuid: string,
     id: string,
     name: string,
     instructor: string,
