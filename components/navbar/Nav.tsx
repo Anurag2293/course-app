@@ -19,7 +19,6 @@ const NAV_MENU = [
 
 const Nav = () => {
     const pathname = usePathname();
-    console.log({ pathname })
     const isAuthenticated = useAppSelector((state) => state.authSlice.value.isAuthenticated);
 
     return (
@@ -43,7 +42,6 @@ const Nav = () => {
                 <ul className='hidden gap-6 text-sm md:flex md:items-center'>
                     {NAV_MENU.map(({ title, link }) => {
                         const isNavLinkActive = pathname === link;
-                        console.log({ pathname, link, isNavLinkActive })
                         return (<li key={title}>
                             <Link
                                 href={link}

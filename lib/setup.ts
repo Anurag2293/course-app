@@ -1,8 +1,9 @@
 
 // FIREBASE
+
 import { db } from "../services/firebase.config.ts"
 import { addDoc, collection } from "firebase/firestore";
-import type { CourseType } from "./types";
+import { CourseType } from "./types.ts";
 
 let computerScienceCourses = [
     {

@@ -17,7 +17,7 @@ export const columns: ColumnDef<CourseType>[] = [
         header: "Instructor"
     },
     {
-        accessorKey: "id",
+        accessorKey: "code",
         header: "Course Code"
     },
     {
@@ -30,7 +30,7 @@ export const columns: ColumnDef<CourseType>[] = [
         cell: ({ row }) => {
             const course = row.original;
             return (
-                <Link href={`/details/${course.uuid}`}>
+                <Link href={`/details/${course.id}`}>
                     <Button variant="ghost">View details</Button>
                 </Link>
             )
