@@ -2,10 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useSelector, TypedUseSelectorHook } from "react-redux";
 
 import courseSlice from "./features/course-slice";
+import authSlice from "./features/auth-slice";
 
 export const store = configureStore({
     reducer: {
-        courseSlice
+        courseSlice,
+        authSlice
     }
 });
 

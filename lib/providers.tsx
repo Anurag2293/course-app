@@ -1,6 +1,6 @@
 
 import ReduxProvider from "@/redux/provider";
-import ThemeProvider from "@/components/theme-provider"
+import { ThemeProvider } from "@/components/theme-provider"
 
 const Providers = ({
     children,
