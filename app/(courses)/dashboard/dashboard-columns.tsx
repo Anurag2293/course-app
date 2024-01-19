@@ -1,20 +1,25 @@
 "use client"
 
+// NODE MODULES
 import Link from "next/link";
-import { ColumnDef } from "@tanstack/react-table"
 import Image from "next/image";
+import { ColumnDef } from "@tanstack/react-table"
+import { ArrowUpDown } from "lucide-react"
+import { toast } from "sonner";
 
+// UI
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress"
-import { Badge } from "@/components/ui/badge"
 
+// UTILS
 import type { CourseType } from "@/lib/types"
-import { capitalize, formatDate, toEpochSeconds } from "@/lib/utils";
-import { useAppSelector } from "@/redux/store";
+import { formatDate, toEpochSeconds } from "@/lib/utils";
 import { markCourseCompleted } from "@/services/functions";
+
+// REDUX
 import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppSelector } from "@/redux/store";
 import { updateEnrolledCourses } from "@/redux/features/course-slice";
-import { toast } from "sonner";
 
 export const columns: ColumnDef<CourseType>[] = [
     {
@@ -36,7 +41,17 @@ export const columns: ColumnDef<CourseType>[] = [
     },
     {
         accessorKey: "dueDate",
-        header: "Due Date",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Due Date
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
         cell: ({ row }) => {
             const date = new Date(row.original.dueDate * 1000);
             const text = formatDate(date);
@@ -51,8 +66,8 @@ export const columns: ColumnDef<CourseType>[] = [
         cell: ({ row }) => {
             const { startDate, dueDate, students } = row.original;
             const currentSeconds = toEpochSeconds(new Date());
-            let progressPercentage = Math.max(0, currentSeconds-startDate) / (dueDate - startDate) * 100;
-
+            let progressPercentage = Math.max(0, currentSeconds - startDate) / (dueDate - startDate) * 100;
+            
             // if course marked as completed, then the course progress is also completed.
             const { id: studentId } = useAppSelector(state => state.authSlice.value)
             const studentStatus = students.find((value) => value.studentId === studentId)
@@ -60,7 +75,7 @@ export const columns: ColumnDef<CourseType>[] = [
             if (courseStatus === "completed") {
                 progressPercentage = 100;
             }
-
+            
             return (
                 <Progress value={progressPercentage} />
             )
@@ -90,7 +105,7 @@ export const columns: ColumnDef<CourseType>[] = [
         cell: ({ row }) => {
             const dispatch = useAppDispatch()
             const { id: studentId } = useAppSelector(state => state.authSlice.value)
-            const { id: courseId, students,  } = row.original;
+            const { id: courseId, students, } = row.original;
             const studentStatus = row.original.students.find((value) => value.studentId === studentId)
             const { courseStatus } = studentStatus || {}
 
@@ -108,7 +123,7 @@ export const columns: ColumnDef<CourseType>[] = [
                     })
                 }
             }
-            
+
             return (
                 <>
                     {courseStatus === "completed" && <Button disabled variant="outline">Completed</Button>}

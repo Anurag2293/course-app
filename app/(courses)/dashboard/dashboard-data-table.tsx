@@ -38,6 +38,7 @@ export function DashboardDataTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
+    const { name } = useAppSelector(state => state.authSlice.value)
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
@@ -62,10 +63,17 @@ export function DashboardDataTable<TData, TValue>({
                 {/* filtering */}
                 <Card className="items-start justify-center flex flex-col">
                     <CardHeader>
-                        <CardTitle>Search Courses</CardTitle>
-                        <CardDescription>Search Courses by using course name or instructor</CardDescription>
+                        <CardTitle>Dashboard</CardTitle>
+                        <CardDescription>Welcome, {name}! Find your courses here.</CardDescription>
                     </CardHeader>
-                    <CardContent className="w-full md:max-w-md flex flex-col gap-y-4 md:flex-row md:gap-x-4">
+                    {/* <CardContent>
+                        <Button
+                            onClick={() => {
+                                table.getColumn("code")?.setFilterValue("completed")
+                            }}
+                        >Completed Courses</Button>
+                    </CardContent> */}
+                    {/* <CardContent className="w-full md:max-w-md flex flex-col gap-y-4 md:flex-row md:gap-x-4">
                         <Input
                             placeholder="Enter course name"
                             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -80,7 +88,7 @@ export function DashboardDataTable<TData, TValue>({
                                 table.getColumn("instructor")?.setFilterValue(event.target.value)
                             }}
                         />
-                    </CardContent>
+                    </CardContent> */}
                 </Card>
                 <Table>
                     <TableHeader>

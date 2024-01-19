@@ -51,13 +51,13 @@ const Dashboard = (props: Props) => {
     }
 
     return (
-        <Suspense
-            fallback={<div>Loading...</div>}
-        >
-            <div className="container mx-auto py-10">
+        <div className="container mx-auto py-10">
+            <Suspense
+                fallback={<div>Loading...</div>}
+            >
                 <DashboardDataTable columns={columns} data={enrolledCourses} />
-            </div>
-        </Suspense>
+            </Suspense>
+        </div>
     )
 }
 
