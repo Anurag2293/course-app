@@ -18,3 +18,14 @@ export function formatDate(dateTime: Date) {
 export function toEpochSeconds(date: Date) {
     return Math.floor(date.getTime() / 1000);
 }
+
+export function capitalize(text: string) {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()
+}
+
+export function capitalizeSentence(sentence: string) {
+    return sentence
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+}
