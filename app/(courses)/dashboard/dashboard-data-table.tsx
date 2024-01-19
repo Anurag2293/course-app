@@ -1,7 +1,11 @@
 "use client"
 
-import * as React from "react"
+import React, { useState } from "react"
 
+// REDUX IMPORTS
+import { useAppSelector } from "@/redux/store";
+
+// UI
 import {
     ColumnDef,
     flexRender,
@@ -13,7 +17,6 @@ import {
     ColumnFiltersState, // filtering
     getFilteredRowModel, // filtering
 } from "@tanstack/react-table"
-
 import {
     Table,
     TableBody,
@@ -22,7 +25,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
@@ -36,8 +38,8 @@ export function DashboardDataTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
-    const [sorting, setSorting] = React.useState<SortingState>([])
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+    const [sorting, setSorting] = useState<SortingState>([])
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
     const table = useReactTable({
         data,

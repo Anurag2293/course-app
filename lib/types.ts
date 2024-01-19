@@ -12,8 +12,8 @@ export type CourseType = {
     location: string,
     prerequisites: Array<string>,
     syllabus: Array<SyllabusType>,
-    startDate: Date,
-    dueDate: Date,
+    startDate: number,
+    dueDate: number,
     students: [{
         studentId: string,
         courseStatus: "pending" | "completed"

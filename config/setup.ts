@@ -1,6 +1,6 @@
 
 const { initializeApp } = require("firebase/app")
-const { addDoc, collection, getFirestore } = require("firebase/firestore");
+const { addDoc, collection, getFirestore, doc, deleteDoc, getDocs } = require("firebase/firestore");
 
 const firebaseConfig = {
 	apiKey: "AIzaSyCofd05rLHzFcmss_6DoaYj4MXnUgeSbH8",
@@ -17,6 +17,8 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Cloud firestore
 const db = getFirestore(app);
+
+const coursesCollection = collection(db, "courses");
 
 type CourseType = {
     id: string,
@@ -47,7 +49,6 @@ type SyllabusType = {
 
 let computerScienceCourses = [
     {
-        id: "CS101",
         code: "INTROCS",
         name: "Introduction to Computer Science",
         instructor: "Dr. Alex Johnson",
@@ -67,7 +68,6 @@ let computerScienceCourses = [
         students: []
     },
     {
-        id: "CS103",
         code: "ALGO101",
         name: "Algorithms",
         instructor: "Dr. Robert Yang",
@@ -87,7 +87,6 @@ let computerScienceCourses = [
         students: []
     },
     {
-        id: "CS104",
         code: "DBSYS",
         name: "Database Systems",
         instructor: "Dr. Maria Lopez",
@@ -107,7 +106,6 @@ let computerScienceCourses = [
         students: []
     },
     {
-        id: "CS105",
         code: "WEBDEV",
         name: "Web Development",
         instructor: "Dr. Lisa Ray",
@@ -127,7 +125,6 @@ let computerScienceCourses = [
         students: []
     },
     {
-        id: "CS106",
         code: "MLAI",
         name: "Machine Learning & AI",
         instructor: "Dr. Neil Patil",
@@ -147,7 +144,6 @@ let computerScienceCourses = [
         students: []
     },
     {
-        id: "CS107",
         code: "OPSY",
         name: "Operating Systems",
         instructor: "Dr. Alan Turing",
@@ -167,7 +163,6 @@ let computerScienceCourses = [
         students: []
     },
     {
-        id: "CS108",
         code: "NETSEC",
         name: "Network Security",
         instructor: "Dr. Ava Smith",
@@ -187,7 +182,6 @@ let computerScienceCourses = [
         students: []
     },
     {
-        id: "CS109",
         code: "MOBDEV",
         name: "Mobile App Development",
         instructor: "Dr. John Doe",
@@ -207,7 +201,6 @@ let computerScienceCourses = [
         students: []
     },
     {
-        id: "CS110",
         code: "ADVCODE",
         name: "Advanced Programming Concepts",
         instructor: "Dr. Emily Stone",
@@ -227,7 +220,6 @@ let computerScienceCourses = [
         students: []
     },
     {
-        id: "CS111",
         code: "CLOUDCOMP",
         name: "Cloud Computing",
         instructor: "Dr. Richard Feynman",
@@ -247,7 +239,6 @@ let computerScienceCourses = [
         students: []
     },
     {
-        id: "CS112",
         code: "COMGRAPH",
         name: "Computer Graphics",
         instructor: "Dr. Jane Wilson",
@@ -268,13 +259,20 @@ let computerScienceCourses = [
     }
 ];
 
+const deleteAllDocs = async () => {
+    const coursesSnapshot = await getDocs(coursesCollection);
+    coursesSnapshot.forEach(async (course: any) => {
+        await deleteDoc(doc(db, "courses", course.id))
+    })
+}
+
 const addCourse = async (course: CourseType) => {
-    const coursesCollection = collection(db, "courses");
     await addDoc(coursesCollection, course);
 } 
 
 const addCoursesToDB = async () => {
     try {
+        await deleteAllDocs();
         const promises = computerScienceCourses.map((course: any) => addCourse(course))
         await Promise.all(promises)
         console.log("Initialized the database successfully!")

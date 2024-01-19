@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link";
+import Image from "next/image";
 import { ColumnDef } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button";
@@ -28,6 +29,7 @@ export const columns: ColumnDef<CourseType>[] = [
         accessorKey: "id",
         header: "",
         cell: ({ row }) => {
+            console.log({row: row.original});
             const course = row.original;
             return (
                 <Link href={`/details/${course.id}`}>

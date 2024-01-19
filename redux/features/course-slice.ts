@@ -3,7 +3,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { CourseType } from "@/lib/types";
 
 type CourseState = {
-    courses: Array<CourseType>
+    courses: Array<CourseType>,
+    enrolledCourses: Array<CourseType>
 }
 
 type InitialState = {
@@ -12,10 +13,10 @@ type InitialState = {
 
 const initialState = {
     value: {
-        courses: []
+        courses: [],
+        enrolledCourses: []
     } as CourseState
 } as InitialState
-
 
 export const course = createSlice({
     name: "course",
@@ -27,13 +28,22 @@ export const course = createSlice({
         addCourses: (state, action: PayloadAction<CourseType[]>) => {
             return {
                 value: {
-                    courses: action.payload
+                    courses: action.payload,
+                    enrolledCourses: state.value.enrolledCourses
                 }
             }  
+        },
+        updateEnrolledCourses: (state, action: PayloadAction<CourseType[]>) => {
+            return {
+                value: {
+                    courses: state.value.courses,
+                    enrolledCourses: action.payload
+                }
+            }
         }
     }
 })
 
 // exporting actions and reducers from course slice
-export const { resetCourses, addCourses } = course.actions;
+export const { resetCourses, addCourses, updateEnrolledCourses } = course.actions;
 export default course.reducer;

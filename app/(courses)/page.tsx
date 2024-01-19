@@ -2,21 +2,20 @@
 
 import { useEffect } from "react"
 
-// FIREBASE
-import { coursesCollection } from "@/services/firebase.config"
-import { getDocs } from "firebase/firestore";
-
 // REDUX IMPORTS
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/redux/store";
 import { addCourses } from "@/redux/features/course-slice";
 
 // STATE
+import { getAllDocs } from "@/services/functions";
 import { CourseType } from "@/lib/types";
 
 // UI
 import { DataTable } from "@/components/data-table";
 import { columns } from "./course-columns";
+import { toast } from "sonner";
+
 
 export default function Home() {
 	const dispatch = useAppDispatch();
@@ -25,16 +24,13 @@ export default function Home() {
 	useEffect(() => {
 		const fetchCourses = async () => {
 			try {
-				const coursesSnapshot = await getDocs(coursesCollection)
-				const coursesToAdd: CourseType[] = [];
-				coursesSnapshot.forEach((course) => {
-					const courseToAdd = {id: course.id, ...course.data()}
-					coursesToAdd.push(courseToAdd as CourseType);
-				})
-				dispatch(addCourses(coursesToAdd));
+				const { response, error } = await getAllDocs()
+				if (error) {
+					throw new Error(error.message)
+				}
+				dispatch(addCourses(response as CourseType[]));
 			} catch (error: any) {
-				console.log({ error })
-				alert(error?.message)
+				toast(error.message)
 			}
 		}
 		fetchCourses();
