@@ -1,0 +1,265 @@
+[
+    {
+        "code": "INTROCS",
+        "name": "Introduction to Computer Science",
+        "instructor": "Dr. Alex Johnson",
+        "description": "This course provides an overview of the fundamentals of computer science, including basic programming, problem-solving, and the basics of algorithmic thinking.",
+        "enrollmentStatus": "Open",
+        "thumbnail": "/intro_to_cs_thumbnail.jpg",
+        "duration": "12 weeks",
+        "schedule": "Mondays and Wednesdays, 3:00 PM - 5:00 PM",
+        "location": "Tech Building, Room 101",
+        "prerequisites": [],
+        "syllabus": [
+            {
+                "week": 1,
+                "topic": "Introduction to Programming",
+                "content": "Basics of Python"
+            }
+        ],
+        "startDate": "2024-02-01T00:00:00.000Z",
+        "dueDate": "2024-05-01T00:00:00.000Z",
+        "students": []
+    },
+    {
+        "code": "ALGO101",
+        "name": "Algorithms",
+        "instructor": "Dr. Robert Yang",
+        "description": "This course covers fundamental algorithms in computer science, focusing on divide and conquer, dynamic programming, and greedy algorithms.",
+        "enrollmentStatus": "In Progress",
+        "thumbnail": "/algorithms_thumbnail.jpg",
+        "duration": "10 weeks",
+        "schedule": "Wednesdays and Fridays, 4:00 PM - 6:00 PM",
+        "location": "Main Campus, Room 305",
+        "prerequisites": [
+            "DATASTR"
+        ],
+        "syllabus": [
+            {
+                "week": 1,
+                "topic": "Divide and Conquer",
+                "content": "Basic Principles and Examples"
+            }
+        ],
+        "startDate": "2024-01-15T00:00:00.000Z",
+        "dueDate": "2024-03-26T00:00:00.000Z",
+        "students": []
+    },
+    {
+        "code": "DBSYS",
+        "name": "Database Systems",
+        "instructor": "Dr. Maria Lopez",
+        "description": "Exploring the architecture of modern database systems, this course covers SQL, data modeling, and database design.",
+        "enrollmentStatus": "Open",
+        "thumbnail": "/database_systems_thumbnail.jpg",
+        "duration": "12 weeks",
+        "schedule": "Mondays and Thursdays, 2:00 PM - 4:00 PM",
+        "location": "Tech Building, Room 108",
+        "prerequisites": [
+            "INTROCS"
+        ],
+        "syllabus": [
+            {
+                "week": 1,
+                "topic": "Introduction to Databases",
+                "content": "Overview of Database Systems"
+            }
+        ],
+        "startDate": "2024-02-10T00:00:00.000Z",
+        "dueDate": "2024-05-05T00:00:00.000Z",
+        "students": []
+    },
+    {
+        "code": "WEBDEV",
+        "name": "Web Development",
+        "instructor": "Dr. Lisa Ray",
+        "description": "An introduction to web development, covering HTML, CSS, JavaScript, and responsive design principles.",
+        "enrollmentStatus": "Open",
+        "thumbnail": "/webdev_thumbnail.jpg",
+        "duration": "8 weeks",
+        "schedule": "Tuesdays and Thursdays, 1:00 PM - 3:00 PM",
+        "location": "Online",
+        "prerequisites": [
+            "INTROCS"
+        ],
+        "syllabus": [
+            {
+                "week": 1,
+                "topic": "HTML Basics",
+                "content": "Introduction to HTML"
+            }
+        ],
+        "startDate": "2024-03-01T00:00:00.000Z",
+        "dueDate": "2024-04-26T00:00:00.000Z",
+        "students": []
+    },
+    {
+        "code": "MLAI",
+        "name": "Machine Learning & AI",
+        "instructor": "Dr. Neil Patil",
+        "description": "Fundamentals of machine learning and artificial intelligence, covering algorithms, neural networks, and practical applications.",
+        "enrollmentStatus": "Closed",
+        "thumbnail": "/mlai_thumbnail.jpg",
+        "duration": "15 weeks",
+        "schedule": "Mondays, Wednesdays, and Fridays, 11:00 AM - 1:00 PM",
+        "location": "Tech Building, Room 407",
+        "prerequisites": [
+            "ALGO101",
+            "DATASTR"
+        ],
+        "syllabus": [
+            {
+                "week": 1,
+                "topic": "Introduction to Machine Learning",
+                "content": "Basic Concepts and Definitions"
+            }
+        ],
+        "startDate": "2024-01-10T00:00:00.000Z",
+        "dueDate": "2024-04-30T00:00:00.000Z",
+        "students": []
+    },
+    {
+        "code": "OPSY",
+        "name": "Operating Systems",
+        "instructor": "Dr. Alan Turing",
+        "description": "Detailed study of operating system concepts, including process management, memory management, and file systems.",
+        "enrollmentStatus": "In Progress",
+        "thumbnail": "/os_thumbnail.jpg",
+        "duration": "14 weeks",
+        "schedule": "Wednesdays and Fridays, 9:00 AM - 11:00 AM",
+        "location": "Main Campus, Room 310",
+        "prerequisites": [
+            "DATASTR"
+        ],
+        "syllabus": [
+            {
+                "week": 1,
+                "topic": "Introduction to Operating Systems",
+                "content": "Overview and History"
+            }
+        ],
+        "startDate": "2024-01-15T00:00:00.000Z",
+        "dueDate": "2024-04-23T00:00:00.000Z",
+        "students": []
+    },
+    {
+        "code": "NETSEC",
+        "name": "Network Security",
+        "instructor": "Dr. Ava Smith",
+        "description": "Exploring the fundamentals of network security, including cryptography, network attacks, and defense strategies.",
+        "enrollmentStatus": "Open",
+        "thumbnail": "/netsec_thumbnail.jpg",
+        "duration": "12 weeks",
+        "schedule": "Mondays and Thursdays, 3:00 PM - 5:00 PM",
+        "location": "Tech Building, Room 202",
+        "prerequisites": [
+            "INTROCS"
+        ],
+        "syllabus": [
+            {
+                "week": 1,
+                "topic": "Basics of Network Security",
+                "content": "Introduction to Cryptography"
+            }
+        ],
+        "startDate": "2024-02-05T00:00:00.000Z",
+        "dueDate": "2024-04-28T00:00:00.000Z",
+        "students": []
+    },
+    {
+        "code": "MOBDEV",
+        "name": "Mobile App Development",
+        "instructor": "Dr. John Doe",
+        "description": "Covers the fundamentals of mobile application development, including UI/UX design, mobile programming languages, and deployment.",
+        "enrollmentStatus": "Closed",
+        "thumbnail": "/mobdev_thumbnail.jpg",
+        "duration": "10 weeks",
+        "schedule": "Tuesdays and Fridays, 10:00 AM - 12:00 PM",
+        "location": "Online",
+        "prerequisites": [
+            "WEBDEV"
+        ],
+        "syllabus": [
+            {
+                "week": 1,
+                "topic": "Introduction to Mobile Development",
+                "content": "Platforms and Tools"
+            }
+        ],
+        "startDate": "2024-03-10T00:00:00.000Z",
+        "dueDate": "2024-05-19T00:00:00.000Z",
+        "students": []
+    },
+    {
+        "code": "ADVCODE",
+        "name": "Advanced Programming Concepts",
+        "instructor": "Dr. Emily Stone",
+        "description": "An advanced course on programming paradigms, including functional programming, concurrent programming, and high-performance computing.",
+        "enrollmentStatus": "Open",
+        "thumbnail": "/advcode_thumbnail.jpg",
+        "duration": "16 weeks",
+        "schedule": "Mondays, Wednesdays, and Fridays, 2:00 PM - 4:00 PM",
+        "location": "Tech Building, Room 305",
+        "prerequisites": [
+            "ALGO101"
+        ],
+        "syllabus": [
+            {
+                "week": 1,
+                "topic": "Functional Programming",
+                "content": "Introduction and Basic Concepts"
+            }
+        ],
+        "startDate": "2024-01-20T00:00:00.000Z",
+        "dueDate": "2024-05-10T00:00:00.000Z",
+        "students": []
+    },
+    {
+        "code": "CLOUDCOMP",
+        "name": "Cloud Computing",
+        "instructor": "Dr. Richard Feynman",
+        "description": "Introduction to cloud computing concepts, including infrastructure, services, and deployment models.",
+        "enrollmentStatus": "In Progress",
+        "thumbnail": "/cloudcomp_thumbnail.jpg",
+        "duration": "12 weeks",
+        "schedule": "Tuesdays and Thursdays, 4:00 PM - 6:00 PM",
+        "location": "Main Campus, Room 401",
+        "prerequisites": [
+            "WEBDEV"
+        ],
+        "syllabus": [
+            {
+                "week": 1,
+                "topic": "Basics of Cloud Computing",
+                "content": "Cloud Service Models"
+            }
+        ],
+        "startDate": "2024-02-01T00:00:00.000Z",
+        "dueDate": "2024-04-24T00:00:00.000Z",
+        "students": []
+    },
+    {
+        "code": "COMGRAPH",
+        "name": "Computer Graphics",
+        "instructor": "Dr. Jane Wilson",
+        "description": "This course focuses on the principles and practices in computer graphics, including 3D modeling, rendering, and animation.",
+        "enrollmentStatus": "Open",
+        "thumbnail": "/comgraph_thumbnail.jpg",
+        "duration": "15 weeks",
+        "schedule": "Mondays and Wednesdays, 1:00 PM - 3:00 PM",
+        "location": "Tech Building, Room 408",
+        "prerequisites": [
+            "DATASTR"
+        ],
+        "syllabus": [
+            {
+                "week": 1,
+                "topic": "Introduction to Computer Graphics",
+                "content": "Fundamental Concepts"
+            }
+        ],
+        "startDate": "2024-03-05T00:00:00.000Z",
+        "dueDate": "2024-06-18T00:00:00.000Z",
+        "students": []
+    }
+]

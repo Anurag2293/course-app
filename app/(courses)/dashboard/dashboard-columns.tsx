@@ -30,7 +30,7 @@ export const columns: ColumnDef<CourseType>[] = [
         header: "Thumbnail",
         cell: ({ row }) => {
             return (
-                <Image src={"/" + row.original.thumbnail} alt={row.original.name} width={50} height={50} />
+                <Image src={row.original.thumbnail} alt={row.original.name} width={50} height={50} />
             )
         }
     },

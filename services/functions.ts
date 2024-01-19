@@ -10,9 +10,9 @@ export const getAllCourses = async () => {
         coursesSnapshot.forEach((course) => {
             let courseToAdd = { id: course.id, ...course.data() } as CourseType
             courseToAdd = { 
-                ...courseToAdd, 
-                startDate: course.data().startDate.seconds, 
-                dueDate: course.data().dueDate.seconds 
+                ...courseToAdd,
+                startDate: (new Date(course.data().startDate)).getTime() / 1000,
+                dueDate: (new Date(course.data().dueDate)).getTime() / 1000
             }
             coursesToAdd.push(courseToAdd)
         })
@@ -29,6 +29,7 @@ export const getEnrolledCourses = async (studentId: string): Promise<{ response:
             throw new Error(error.message);
         }
         const enrolledCourses: CourseType[] = allCourses.filter(course => hasEnrolled(course, studentId));
+        console.log({ enrolledCourses });
         return { response: enrolledCourses, error: undefined };
     } catch (error: any) {
         return { response: [], error: error.message };
