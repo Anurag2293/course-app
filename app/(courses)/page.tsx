@@ -8,7 +8,7 @@ import { useAppSelector } from "@/redux/store";
 import { addCourses } from "@/redux/features/course-slice";
 
 // STATE
-import { getAllDocs } from "@/services/functions";
+import { getAllCourses } from "@/services/functions";
 import { CourseType } from "@/lib/types";
 
 // UI
@@ -24,7 +24,7 @@ export default function Home() {
 	useEffect(() => {
 		const fetchCourses = async () => {
 			try {
-				const { response, error } = await getAllDocs()
+				const { response, error } = await getAllCourses()
 				if (error) {
 					throw new Error(error.message)
 				}
