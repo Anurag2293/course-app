@@ -3,13 +3,13 @@ import React, { Suspense } from 'react'
 import CourseDetailsComponent from '@/components/course-details'
 
 type Props = {
-    params: { uuid: string }
+    params: { id: string }
 }
 
 const CourseDetails = (props: Props) => {
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <CourseDetailsComponent uuid={props.params.uuid} />
+            <CourseDetailsComponent id={props.params.id} />
         </Suspense>
     )
 }

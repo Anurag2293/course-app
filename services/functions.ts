@@ -1,7 +1,7 @@
 
 // FIREBASE
-import { coursesCollection } from "@/services/firebase.config"
-import { getDocs } from "firebase/firestore";
+import { db, coursesCollection } from "@/services/firebase.config"
+import { getDoc, getDocs, doc, updateDoc } from "firebase/firestore";
 
 export const getAllDocs = async () => {
     try {
@@ -19,5 +19,44 @@ export const getAllDocs = async () => {
         return { response: coursesToAdd, error: undefined };
     } catch (error: any) {
         return { response: [], error: error}
+    }
+}
+
+export const addStudentToCourse = async (courseId: string, studentId: string) => {
+    try {
+        console.log({courseId, studentId})
+        const currentDocRef = doc(db, "courses", courseId);
+        const currentDocSnap = await getDoc(currentDocRef);
+        if (!currentDocSnap.exists()) {
+            throw new Error("No such document!");
+        }
+        const currentDoc = currentDocSnap.data() as CourseType;
+        
+        const studentsEnrolled = currentDoc.students;
+        if (studentsEnrolled.filter(student => student.studentId === studentId).length > 0) {
+            throw new Error("Already enrolled!")
+        } 
+
+        studentsEnrolled.push({studentId, courseStatus: "pending"});
+        await updateDoc(currentDocRef, {
+            students: studentsEnrolled
+        });
+        return { error: undefined, response: "Course registered!"};
+    } catch (error: any) {
+        return { error: error.message, response: undefined };
+    }
+}
+
+export const getCourseByID = async (courseId: string) => {
+    try {
+        const currentDocRef = doc(db, "courses", courseId);
+        const currentDocSnap = await getDoc(currentDocRef);
+        if (!currentDocSnap.exists()) {
+            throw new Error("No such document!");
+        }
+        const currentDoc = currentDocSnap.data() as CourseType;
+        return { error: undefined, response: currentDoc};
+    } catch (error: any) {
+        return { error: error.message, response: undefined };
     }
 }

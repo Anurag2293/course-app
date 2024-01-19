@@ -1,5 +1,10 @@
 "use client"
 
+import { useState, useMemo } from "react"
+
+// UTILS
+import { addStudentToCourse, getCourseByID } from "@/services/functions";
+
 // REDUX IMPORTS
 import { useAppSelector } from "@/redux/store";
 
@@ -13,31 +18,76 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { toast } from "sonner";
 
 type Props = {
-    uuid: string
+    id: string
 }
 
-const CourseDetailsComponent = ({ uuid }: Props) => {
-    const courses = useAppSelector((state) => state.courseSlice.value.courses);
-    const currentCourse = courses.filter((course) => course.uuid === uuid)[0];
-    console.log({ currentCourse })
+const initialCourseState: CourseType = {
+    id: "",
+    code: "",
+    name: "",
+    instructor: "",
+    description: "",
+    enrollmentStatus: "Open",
+    thumbnail: "",
+    duration: "",
+    schedule: "",
+    location: "",
+    prerequisites: [],
+    syllabus: [],
+    startDate: new Date("2024-02-01"),
+    dueDate: new Date("2024-05-01"),
+    students: [{ studentId: "", courseStatus: "pending" }]
+}
 
-    if (!currentCourse) {
-        return (
-            <div>No such course exists!</div>
-        )
+const CourseDetailsComponent = ({ id }: Props) => {
+    const { isAuthenticated, id: studentId } = useAppSelector(state => state.authSlice.value);
+    const [currentCourse, setCurrentCourse] = useState<CourseType>(initialCourseState)
+    const [studentEnrolled, setStudentEnrolled] = useState<boolean>(false);
+
+    const checkDetails = async () => {
+        const { response, error } = await getCourseByID(id);
+        if (error) {
+            setCurrentCourse(initialCourseState);
+            setStudentEnrolled(false);
+        } else {
+            let currCourse = response as CourseType;
+            setCurrentCourse(currCourse);
+            setStudentEnrolled(currCourse.students.filter((student) => student.studentId === studentId).length > 0)
+        }
+    }
+
+    useMemo(async () => {
+        await checkDetails()
+    }, [id])
+
+    const handleEnrollmentSubmit = async () => {
+        console.log("we are here");
+        try {
+            const { response, error } = await addStudentToCourse(id, studentId);
+            console.log({response, error})
+            if (error) {
+                throw new Error(error.message)
+            }
+            await checkDetails()
+            console.log("Registered")
+            toast(response)
+        } catch (error: any) {
+            toast(error.message)
+        }
     }
 
     return (
         <div className="w-full mx-auto px-4 py-8">
-            <h1 className="text-4xl font-bold mb-4">{currentCourse.name} ({currentCourse.id})</h1>
+            <h1 className="text-4xl font-bold mb-4">{currentCourse.name} ({currentCourse.code})</h1>
             <h2 className="text-xl font-semibold mb-2">Instructor: {currentCourse.instructor}</h2>
             <p className="text-gray-600 dark:text-gray-400 mb-4">{currentCourse.description}</p>
             <Separator />
             <div className={`p-3 rounded-md my-4 max-w-max
                 ${currentCourse.enrollmentStatus === "Open" && "bg-green-100 text-green-400"} 
-                ${currentCourse.enrollmentStatus === "InProgress" && "bg-yellow-100 text-yellow-400"} 
+                ${currentCourse.enrollmentStatus === "In Progress" && "bg-yellow-100 text-yellow-400"} 
                 ${currentCourse.enrollmentStatus === "Closed" && "bg-red-100 text-red-400"}
             `}>
                 <strong>Status: </strong>{currentCourse.enrollmentStatus}
@@ -77,8 +127,13 @@ const CourseDetailsComponent = ({ uuid }: Props) => {
                     ))}
                 </CollapsibleContent>
             </Collapsible>
-            <Button className="w-full md:w-1/2" size="lg">
-                Enroll Now
+            <Button
+                className="w-full md:w-1/2"
+                size="lg"
+                disabled={!isAuthenticated || studentEnrolled || currentCourse.enrollmentStatus === "Closed"}
+                onClick={handleEnrollmentSubmit}
+            >
+                {studentEnrolled ? "Enrolled" : "Enroll Now"}
             </Button>
         </div>
     )
