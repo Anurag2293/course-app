@@ -35,6 +35,24 @@ export const getEnrolledCourses = async (studentId: string): Promise<{ response:
     }
 }
 
+const hasEnrolled = (course: CourseType, studentId: string) => {
+    return (course.students.filter(student => student.studentId === studentId).length > 0);
+}
+
+export const getCourseByID = async (courseId: string) => {
+    try {
+        const currentDocRef = doc(db, "courses", courseId);
+        const currentDocSnap = await getDoc(currentDocRef);
+        if (!currentDocSnap.exists()) {
+            throw new Error("No such document!");
+        }
+        const currentDoc = currentDocSnap.data() as CourseType;
+        return { error: undefined, response: currentDoc};
+    } catch (error: any) {
+        return { error: error.message, response: undefined };
+    }
+}
+
 export const addStudentToCourse = async (courseId: string, studentId: string) => {
     try {
         console.log({courseId, studentId})
@@ -60,21 +78,31 @@ export const addStudentToCourse = async (courseId: string, studentId: string) =>
     }
 }
 
-export const getCourseByID = async (courseId: string) => {
+export const markCourseCompleted = async (courseId: string, studentId: string) => {
     try {
-        const currentDocRef = doc(db, "courses", courseId);
-        const currentDocSnap = await getDoc(currentDocRef);
-        if (!currentDocSnap.exists()) {
-            throw new Error("No such document!");
+        const { response: currentDoc, error } = await getCourseByID(courseId);
+        if (error) {
+            throw new Error(error.message);
         }
-        const currentDoc = currentDocSnap.data() as CourseType;
-        return { error: undefined, response: currentDoc};
+        let studentsEnrolled = currentDoc?.students;
+        if (!studentsEnrolled?.find((value) => value.studentId === studentId)) {
+            throw new Error("No student enrollment found!.")
+        }
+        const updatedStudentsEnrolled = studentsEnrolled.map((student) => {
+            if (student.studentId === studentId) {
+                return {...student, courseStatus: "completed"}
+            }
+            return student;
+        })
+        await updateDoc(doc(db, "courses", courseId), {
+            students: updatedStudentsEnrolled
+        })
+        const { response, error: enrollmentError } = await getEnrolledCourses(studentId)
+        if (enrollmentError) {
+            throw new Error(error.message);
+        }
+        return { error: undefined, response: response}
     } catch (error: any) {
-        return { error: error.message, response: undefined };
+        return { error: error.message, response: []}
     }
 }
-
-const hasEnrolled = (course: CourseType, studentId: string) => {
-    return (course.students.filter(student => student.studentId === studentId).length > 0);
-}
-

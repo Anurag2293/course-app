@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { toast } from 'sonner';
 
 // REDUX IMPORTS
@@ -26,7 +26,7 @@ const Dashboard = (props: Props) => {
     useEffect(() => {
         const fetchEnrolledCourses = async () => {
             try {
-                const { response, error }  = await getEnrolledCourses(id);
+                const { response, error } = await getEnrolledCourses(id);
                 if (error) {
                     throw new Error(error.message)
                 }
@@ -51,9 +51,13 @@ const Dashboard = (props: Props) => {
     }
 
     return (
-        <div className="container mx-auto py-10">
-            <DashboardDataTable columns={columns} data={enrolledCourses} />
-        </div>
+        <Suspense
+            fallback={<div>Loading...</div>}
+        >
+            <div className="container mx-auto py-10">
+                <DashboardDataTable columns={columns} data={enrolledCourses} />
+            </div>
+        </Suspense>
     )
 }
 

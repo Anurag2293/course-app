@@ -11,6 +11,10 @@ import { Badge } from "@/components/ui/badge"
 import type { CourseType } from "@/lib/types"
 import { capitalize, formatDate, toEpochSeconds } from "@/lib/utils";
 import { useAppSelector } from "@/redux/store";
+import { markCourseCompleted } from "@/services/functions";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { updateEnrolledCourses } from "@/redux/features/course-slice";
+import { toast } from "sonner";
 
 export const columns: ColumnDef<CourseType>[] = [
     {
@@ -81,10 +85,36 @@ export const columns: ColumnDef<CourseType>[] = [
         }
     },
     {
-        accessorKey: "students",
+        accessorKey: "code",
         header: "Mark as completed",
         cell: ({ row }) => {
-            return <div>Mark</div>
+            const dispatch = useAppDispatch()
+            const { id: studentId } = useAppSelector(state => state.authSlice.value)
+            const { id: courseId, students,  } = row.original;
+            const studentStatus = row.original.students.find((value) => value.studentId === studentId)
+            const { courseStatus } = studentStatus || {}
+
+            const handleMarkComplete = async () => {
+                try {
+                    const { error, response } = await markCourseCompleted(courseId, studentId);
+                    if (error) {
+                        throw new Error(error.message);
+                    }
+                    dispatch(updateEnrolledCourses(response as CourseType[]))
+                    toast("Course marked complete successfully!");
+                } catch (error: any) {
+                    toast("Error while updating", {
+                        description: error.message
+                    })
+                }
+            }
+            
+            return (
+                <>
+                    {courseStatus === "completed" && <Button disabled variant="outline">Completed</Button>}
+                    {courseStatus === "pending" && <Button onClick={handleMarkComplete}>Complete</Button>}
+                </>
+            )
         }
     },
     {
