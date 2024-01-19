@@ -11,6 +11,7 @@ import { useAppSelector } from "@/redux/store";
 import { MobileMenu } from './Buttons';
 import ModeToggle from './ModeToggle';
 import LoginDialog from './LoginDialog';
+import Profile from './Profile';
 
 const NAV_MENU = [
     { title: "Courses", link: "/" },
@@ -56,7 +57,7 @@ const Nav = () => {
             <div className='flex justify-endgap-4'>
                 <ModeToggle />
                 <span>
-                    {isAuthenticated && <div>Authenticated</div>}
+                    {isAuthenticated && <div className='ml-1 md:ml-2'><Profile /></div>}
                 </span>
                 <span className="ml-1 md:ml-2">
                     {!isAuthenticated && <LoginDialog />}
