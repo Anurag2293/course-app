@@ -63,7 +63,7 @@ const LoginDialog = () => {
             <DialogTrigger asChild>
                 <Button variant="outline">Login</Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="max-w-[425px] ">
                 <DialogHeader>
                     <DialogTitle>Login</DialogTitle>
                     <DialogDescription>

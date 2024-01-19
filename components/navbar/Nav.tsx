@@ -7,16 +7,15 @@ import Link from 'next/link'
 // REDUX
 import { useAppSelector } from "@/redux/store";
 
+// UTILS
+import { NAV_MENU } from '@/lib/constants';
+
 // UI
-import { MobileMenu } from './Buttons';
+import MobileMenu from './MobileMenu';
 import ModeToggle from './ModeToggle';
 import LoginDialog from './LoginDialog';
 import Profile from './Profile';
 
-const NAV_MENU = [
-    { title: "Courses", link: "/" },
-    { title: "Dashboard", link: "/dashboard" }
-] as const;
 
 const Nav = () => {
     const pathname = usePathname();

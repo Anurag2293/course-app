@@ -25,14 +25,14 @@ import {
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./ui/card"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../../components/ui/card"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export function CourseDataTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
@@ -58,7 +58,7 @@ export function DataTable<TData, TValue>({
         <div>
             <div className="rounded-md border">
                 {/* filtering */}
-                <Card className="items-start justify-center flex flex-col">
+                <Card className="items-start justify-center flex flex-col mb-2">
                     <CardHeader>
                         <CardTitle>Search Courses</CardTitle>
                         <CardDescription>Search Courses by using course name or instructor</CardDescription>

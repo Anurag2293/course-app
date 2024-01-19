@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { Suspense, useEffect } from "react"
 
 // REDUX IMPORTS
 import { useAppDispatch } from "@/hooks/useAppDispatch";
@@ -12,7 +12,7 @@ import { getAllCourses } from "@/services/functions";
 import { CourseType } from "@/lib/types";
 
 // UI
-import { DataTable } from "@/components/data-table";
+import { CourseDataTable } from "@/app/(courses)/course-data-table";
 import { columns } from "./course-columns";
 import { toast } from "sonner";
 
@@ -37,10 +37,10 @@ export default function Home() {
 	}, []);
 
 	return (
-		<div>
-			<div className="container mx-auto py-10">
-				<DataTable columns={columns} data={courses} />
-			</div>
+		<div className="container mx-auto py-10">
+			<Suspense fallback={<div>Loading...</div>}>
+				<CourseDataTable columns={columns} data={courses} />
+			</Suspense>
 		</div>
 	)
 }
