@@ -20,8 +20,8 @@ type Props = {}
 
 const Dashboard = (props: Props) => {
     const dispatch = useAppDispatch()
-    const { isAuthenticated, email, name, id } = useAppSelector(state => state.authSlice.value);
-    const { courses, enrolledCourses } = useAppSelector((state) => state.courseSlice.value)
+    const { isAuthenticated, id } = useAppSelector(state => state.authSlice.value);
+    const { enrolledCourses } = useAppSelector((state) => state.courseSlice.value)
 
     useEffect(() => {
         const fetchEnrolledCourses = async () => {
@@ -38,7 +38,7 @@ const Dashboard = (props: Props) => {
             }
         }
         fetchEnrolledCourses();
-    }, [])
+    }, [dispatch, id])
 
     if (!isAuthenticated) {
         return (<Card className='max-w-max mx-auto my-auto'>

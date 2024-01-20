@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useCallback } from "react"
 
 // UTILS
 import { addStudentToCourse, getCourseByID } from "@/services/functions";
@@ -37,18 +37,18 @@ const initialCourseState: CourseType = {
     location: "",
     prerequisites: [],
     syllabus: [],
-    startDate: new Date("2024-02-01"),
-    dueDate: new Date("2024-05-01"),
+    startDate: 0,
+    dueDate: 0,
     students: [{ studentId: "", courseStatus: "pending" }]
 }
 
-const CourseDetailsComponent = ({ id }: Props) => {
+const CourseDetailsComponent = ({ id: courseId }: Props) => {
     const { isAuthenticated, id: studentId } = useAppSelector(state => state.authSlice.value);
     const [currentCourse, setCurrentCourse] = useState<CourseType>(initialCourseState)
     const [studentEnrolled, setStudentEnrolled] = useState<boolean>(false);
 
-    const checkDetails = async () => {
-        const { response, error } = await getCourseByID(id);
+    const checkDetails = useCallback(async () => {
+        const { response, error } = await getCourseByID(courseId);
         if (error) {
             setCurrentCourse(initialCourseState);
             setStudentEnrolled(false);
@@ -57,16 +57,16 @@ const CourseDetailsComponent = ({ id }: Props) => {
             setCurrentCourse(currCourse);
             setStudentEnrolled(currCourse.students.filter((student) => student.studentId === studentId).length > 0)
         }
-    }
+    }, [courseId, studentId])
 
     useMemo(async () => {
         await checkDetails()
-    }, [id])
+    }, [checkDetails])
 
     const handleEnrollmentSubmit = async () => {
         console.log("we are here");
         try {
-            const { response, error } = await addStudentToCourse(id, studentId);
+            const { response, error } = await addStudentToCourse(courseId, studentId);
             console.log({response, error})
             if (error) {
                 throw new Error(error.message)

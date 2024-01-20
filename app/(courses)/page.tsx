@@ -34,7 +34,7 @@ export default function Home() {
 			}
 		}
 		fetchCourses();
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div className="container mx-auto py-10">

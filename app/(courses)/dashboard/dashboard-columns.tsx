@@ -20,6 +20,9 @@ import { markCourseCompleted } from "@/services/functions";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/redux/store";
 import { updateEnrolledCourses } from "@/redux/features/course-slice";
+import ProgressBar from "@/components/dashboard-table/ProgressBar";
+import CompletionStatus from "@/components/dashboard-table/CompletionStatus";
+import CompleteButton from "@/components/dashboard-table/CompleteButton";
 
 export const columns: ColumnDef<CourseType>[] = [
     {
@@ -64,72 +67,21 @@ export const columns: ColumnDef<CourseType>[] = [
         accessorKey: "startDate",
         header: "Course Progress",
         cell: ({ row }) => {
-            const { startDate, dueDate, students } = row.original;
-            const currentSeconds = toEpochSeconds(new Date());
-            let progressPercentage = Math.max(0, currentSeconds - startDate) / (dueDate - startDate) * 100;
-            
-            // if course marked as completed, then the course progress is also completed.
-            const { id: studentId } = useAppSelector(state => state.authSlice.value)
-            const studentStatus = students.find((value) => value.studentId === studentId)
-            const { courseStatus } = studentStatus || { courseStatus: "pending" }
-            if (courseStatus === "completed") {
-                progressPercentage = 100;
-            }
-            
-            return (
-                <Progress value={progressPercentage} />
-            )
+            return <ProgressBar row={row.original} />
         }
     },
     {
         accessorKey: "students",
         header: "Completion Status",
         cell: ({ row }) => {
-            const { id: studentId } = useAppSelector(state => state.authSlice.value)
-            const studentStatus = row.original.students.find((value) => value.studentId === studentId)
-            if (studentStatus === undefined) {
-                return <div>Loading...</div>
-            }
-            const { courseStatus } = studentStatus
-            return (
-                <>
-                    {courseStatus === "completed" && <div className="max-w-max rounded-lg  px-2 py-1 font-semibold bg-green-100 text-green-500">Completed</div>}
-                    {courseStatus === "pending" && <div className="max-w-max rounded-lg  px-2 py-1 font-semibold bg-yellow-100 text-yellow-500">Pending</div>}
-                </>
-            )
+            return <CompletionStatus row={row.original} />
         }
     },
     {
         accessorKey: "code",
         header: "Mark as completed",
         cell: ({ row }) => {
-            const dispatch = useAppDispatch()
-            const { id: studentId } = useAppSelector(state => state.authSlice.value)
-            const { id: courseId, students, } = row.original;
-            const studentStatus = row.original.students.find((value) => value.studentId === studentId)
-            const { courseStatus } = studentStatus || {}
-
-            const handleMarkComplete = async () => {
-                try {
-                    const { error, response } = await markCourseCompleted(courseId, studentId);
-                    if (error) {
-                        throw new Error(error.message);
-                    }
-                    dispatch(updateEnrolledCourses(response as CourseType[]))
-                    toast("Course marked complete successfully!");
-                } catch (error: any) {
-                    toast("Error while updating", {
-                        description: error.message
-                    })
-                }
-            }
-
-            return (
-                <>
-                    {courseStatus === "completed" && <Button disabled variant="outline">Completed</Button>}
-                    {courseStatus === "pending" && <Button onClick={handleMarkComplete}>Complete</Button>}
-                </>
-            )
+            <CompleteButton row={row.original} />
         }
     },
     {
